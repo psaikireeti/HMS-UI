@@ -1,0 +1,71 @@
+<div class="pharmacist-dashboard">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Pharmacist Dashboard</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened>
+      <mat-nav-list>
+        <a mat-list-item routerLink="./dashboard" routerLinkActive="active">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+        <a mat-list-item routerLink="./prescriptions" routerLinkActive="active">
+          <mat-icon>receipt</mat-icon>
+          <span>View Prescriptions</span>
+        </a>
+        <a mat-list-item routerLink="./inventory" routerLinkActive="active">
+          <mat-icon>inventory</mat-icon>
+          <span>Medicine Inventory</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content">
+        <div class="dashboard-grid">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Pending Prescriptions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let prescription of pendingPrescriptions">
+                  <mat-icon mat-list-icon>assignment</mat-icon>
+                  <div mat-line>Patient: {{prescription.patientName}}</div>
+                  <div mat-line>Dr. {{prescription.doctorName}} - {{prescription.date | date}}</div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Low Stock Medicines</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let medicine of lowStockMedicines">
+                  <mat-icon mat-list-icon [ngStyle]="{'color': medicine.quantity < 10 ? 'red' : 'orange'}">
+                    warning
+                  </mat-icon>
+                  <div mat-line>{{medicine.name}}</div>
+                  <div mat-line>Quantity: {{medicine.quantity}}</div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

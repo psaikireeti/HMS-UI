@@ -1,0 +1,69 @@
+<div class="receptionist-dashboard">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Receptionist Dashboard</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened>
+      <mat-nav-list>
+        <a mat-list-item routerLink="./dashboard" routerLinkActive="active">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+        <a mat-list-item routerLink="./patient-registration" routerLinkActive="active">
+          <mat-icon>person_add</mat-icon>
+          <span>Patient Registration</span>
+        </a>
+        <a mat-list-item routerLink="./appointment-booking" routerLinkActive="active">
+          <mat-icon>event</mat-icon>
+          <span>Book Appointment</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content">
+        <div class="dashboard-grid">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Today's Appointments</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let appointment of todayAppointments">
+                  <mat-icon mat-list-icon>event</mat-icon>
+                  <div mat-line>{{appointment.patientName}}</div>
+                  <div mat-line>Dr. {{appointment.doctorName}} - {{appointment.time | date:'shortTime'}}</div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Recent Patients</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let patient of recentPatients">
+                  <mat-icon mat-list-icon>person</mat-icon>
+                  <div mat-line>{{patient.name}}</div>
+                  <div mat-line>ID: {{patient.id}} - Registered: {{patient.registrationDate | date}}</div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

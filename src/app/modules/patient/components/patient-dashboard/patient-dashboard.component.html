@@ -1,0 +1,69 @@
+<div class="patient-dashboard">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Patient Dashboard</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened>
+      <mat-nav-list>
+        <a mat-list-item routerLink="./dashboard" routerLinkActive="active">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+        <a mat-list-item routerLink="./appointments" routerLinkActive="active">
+          <mat-icon>event</mat-icon>
+          <span>Appointments</span>
+        </a>
+        <a mat-list-item routerLink="./medical-records" routerLinkActive="active">
+          <mat-icon>folder</mat-icon>
+          <span>Medical Records</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content">
+        <div class="dashboard-grid">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Upcoming Appointments</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let appointment of upcomingAppointments">
+                  <mat-icon mat-list-icon>event</mat-icon>
+                  <div mat-line>Dr. {{appointment.doctorName}}</div>
+                  <div mat-line>{{appointment.date | date}} - {{appointment.time}}</div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Recent Prescriptions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let prescription of recentPrescriptions">
+                  <mat-icon mat-list-icon>receipt</mat-icon>
+                  <div mat-line>{{prescription.medicines.join(', ')}}</div>
+                  <div mat-line>Dr. {{prescription.doctorName}} - {{prescription.date | date}}</div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
